@@ -1,0 +1,95 @@
+public class Polynomial {
+
+private double[] coefficient;
+
+Polynomial(double[] coefficient){
+this.coefficient = coefficient;
+}
+
+public double[] getCoefficient() {
+return coefficient;
+}
+
+public Polynomial getSum (Polynomial p1){
+
+double[] resultCoef;
+
+if (coefficient.length < p1.getCoefficient().length)
+{
+for (int i = 0; i < coefficient.length; i++) {
+p1.coefficient[i] += coefficient[i];
+}
+resultCoef = p1.coefficient;
+} else {
+for (int i = 0; i < p1.coefficient.length; i++)
+{
+coefficient[i] += p1.coefficient[i];
+}
+resultCoef = coefficient;
+}
+
+return new Polynomial(resultCoef);
+
+}
+
+@Override
+public String toString(){
+String result = "";
+result = "" + coefficient[0];
+if(coefficient.length >= 2){
+result = coefficient[1] + "x"+ " + " + result;
+for(int i = 2; i < coefficient.length; i++){
+result = "" + coefficient[i] + "x^" + i + " + " + result ;
+}
+}else{
+result = "" + coefficient[0];
+}
+return "Polynomial: " + result;
+}
+
+}
+ 
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+public static void main(String[] args) {
+
+Scanner scanner = new Scanner(System.in);
+System.out.println("Введите размер полинома:");
+int sizeA = scanner.nextInt();
+Random random = new Random();
+int upperRange = 3;
+
+double[] coefA = new double[sizeA];
+
+for (int i = 0; i < sizeA; i++){
+coefA[i] = random.nextInt(upperRange);
+if (i > 0){
+coefA[i] = random.nextInt(upperRange) + 1;
+}
+}
+
+Polynomial a = new Polynomial(coefA);
+
+System.out.println(a);
+
+System.out.println("\nВведите размер полинома:");
+int sizeB = scanner.nextInt();
+double[] coefB = new double[sizeB];
+
+for (int i = 0; i < sizeB; i++){
+coefB[i] = random.nextInt(upperRange);
+if (i > 0){
+coefB[i] = random.nextInt(upperRange) + 1;
+}
+}
+
+Polynomial b = new Polynomial(coefB);
+
+System.out.println(b);
+
+System.out.println("\nСумма полиномов: " + a.getSum(b));
+}
+
+}
